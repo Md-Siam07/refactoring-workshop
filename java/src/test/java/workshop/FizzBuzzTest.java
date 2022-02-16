@@ -2,35 +2,54 @@ package workshop;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
-import static workshop.FizzBuzz.say;
 
 public class FizzBuzzTest {
+
+    List<FizzBuzzPatternMatcher> patternMatchers;
+    FizzBuzz fizzBuzz;
+    public void initialize()
+    {
+        patternMatchers = new ArrayList<>();
+        FizzClass fizzClass = new FizzClass();
+        BuzzClass buzzClass = new BuzzClass();
+        patternMatchers.add(fizzClass);
+        patternMatchers.add(buzzClass);
+        fizzBuzz = new FizzBuzz(patternMatchers);
+    }
+
     @Test
     public void returnsANumber() {
-        assertEquals("1", say(1));
-        assertEquals("4", say(4));
-        assertEquals("7", say(7));
+        initialize();
+        assertEquals("1", fizzBuzz.say(1));
+        assertEquals("4", fizzBuzz.say(4));
+        assertEquals("7", fizzBuzz.say(7));
     }
 
     @Test
     public void factorOf3() {
-        assertEquals("Fizz", say(3));
-        assertEquals("Fizz", say(6));
-        assertEquals("Fizz", say(9));
+        initialize();
+        assertEquals("Fizz", fizzBuzz.say(3));
+        assertEquals("Fizz", fizzBuzz.say(6));
+        assertEquals("Fizz", fizzBuzz.say(9));
     }
 
     @Test
     public void factorOf5() {
-        assertEquals("Buzz", say(5));
-        assertEquals("Buzz", say(10));
-        assertEquals("Buzz", say(20));
+        initialize();
+        assertEquals("Buzz", fizzBuzz.say(5));
+        assertEquals("Buzz", fizzBuzz.say(10));
+        assertEquals("Buzz", fizzBuzz.say(20));
     }
 
     @Test
     public void factorOf3And5() {
-        assertEquals("FizzBuzz", say(15));
-        assertEquals("FizzBuzz", say(30));
-        assertEquals("FizzBuzz", say(60));
+        initialize();
+        assertEquals("FizzBuzz", fizzBuzz.say(15));
+        assertEquals("FizzBuzz", fizzBuzz.say(30));
+        assertEquals("FizzBuzz", fizzBuzz.say(60));
     }
 }
