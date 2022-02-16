@@ -2,27 +2,37 @@ package workshop;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+
+class Player{
+    private final String name;
+
+    public Player(String name){
+        this.name = name;
+    }
+}
 
 public class TriviaGame {
-    ArrayList players = new ArrayList();
+    List<Player> playerlist = new ArrayList<>();
+    List<String> players = new ArrayList<>();
     int[] places = new int[6];
     int[] purses = new int[6];
     boolean[] inPenaltyBox = new boolean[6];
 
-    LinkedList popQuestions = new LinkedList();
-    LinkedList scienceQuestions = new LinkedList();
-    LinkedList sportsQuestions = new LinkedList();
-    LinkedList rockQuestions = new LinkedList();
+    List<String> popQuestions = new LinkedList<>();
+    List<String> scienceQuestions = new LinkedList<>();
+    List<String> sportsQuestions = new LinkedList<>();
+    List<String> rockQuestions = new LinkedList<>();
 
     int currentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
 
     public TriviaGame() {
         for (int i = 0; i < 50; i++) {
-            popQuestions.addLast("Pop Question " + i);
-            scienceQuestions.addLast(("Science Question " + i));
-            sportsQuestions.addLast(("Sports Question " + i));
-            rockQuestions.addLast(createRockQuestion(i));
+            popQuestions.add("Pop Question " + i);
+            scienceQuestions.add(("Science Question " + i));
+            sportsQuestions.add(("Sports Question " + i));
+            rockQuestions.add(createRockQuestion(i));
         }
     }
 
@@ -30,14 +40,9 @@ public class TriviaGame {
         return "Rock Question " + index;
     }
 
-    public boolean isPlayable() {
-        return (howManyPlayers() >= 2);
-    }
-
     public boolean add(String playerName) {
-
-
         players.add(playerName);
+        playerlist.add(new Player(playerName));
         places[howManyPlayers()] = 0;
         purses[howManyPlayers()] = 0;
         inPenaltyBox[howManyPlayers()] = false;
@@ -88,14 +93,23 @@ public class TriviaGame {
     }
 
     private void askQuestion() {
-        if (currentCategory() == "Pop")
-            announce(popQuestions.removeFirst());
-        if (currentCategory() == "Science")
-            announce(scienceQuestions.removeFirst());
-        if (currentCategory() == "Sports")
-            announce(sportsQuestions.removeFirst());
-        if (currentCategory() == "Rock")
-            announce(rockQuestions.removeFirst());
+        announce(getNextQuestion());
+    }
+
+    private String getNextQuestion() {
+        switch (currentCategory()) {
+            case "Pop":
+                return popQuestions.remove(0);
+            case "Science":
+                return scienceQuestions.remove(0);
+            case "Sports":
+                return sportsQuestions.remove(0);
+            case "Rock":
+                return rockQuestions.remove(0);
+
+            default:
+                throw new IllegalStateException("Unexpected value: " + currentCategory());
+        }
     }
 
 

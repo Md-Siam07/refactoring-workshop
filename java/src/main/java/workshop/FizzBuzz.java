@@ -19,7 +19,7 @@ public class FizzBuzz {
         }
 
         if (strReturn != null) return strReturn;
-
+        else
         return String.valueOf(number);
     }
 }
