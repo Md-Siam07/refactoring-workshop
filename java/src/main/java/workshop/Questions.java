@@ -33,14 +33,6 @@ public class Questions {
         listOfQuestions.add(rockQuestions);
     }
 
-    public String getNextQuestion(int position) {
-        for(QuestionPatternMatcher question: listOfQuestions){
-            if(question.match(position)){
-                return question.generate();
-            }
-        }
-        return "";
-    }
     enum QuestionCategory {
         POP("Pop"),
         SCIENCE("Science"),
@@ -57,6 +49,16 @@ public class Questions {
             return label;
         }
     }
+
+    public String getNextQuestion(int position) {
+        for(QuestionPatternMatcher question: listOfQuestions){
+            if(question.match(position)){
+                return question.generate();
+            }
+        }
+        return "";
+    }
+
 
     public QuestionCategory currentCategory(int position) {
         switch (position % 4) {
