@@ -29,7 +29,7 @@ public class TriviaGameTest {
                 "The category is Sports",
                 "Sports Question 0",
                 "Answer was correct!!!!",
-                "Chet now has 1 Gold Coins."), game.getMessages());
+                "Chet now has 1 Gold Coins."), game.announce());
     }
 
     @Test
@@ -50,18 +50,18 @@ public class TriviaGameTest {
                 "The category is Science",
                 "Science Question 0",
                 "Question was incorrectly answered",
-                "Chet was sent to the penalty box"), game.getMessages());
+                "Chet was sent to the penalty box"), game.announce());
     }
 
     class FakeTriviaGame extends TriviaGame {
         List<String> messages = new ArrayList<>();
 
         @Override
-        protected void printMessage(Object message) {
+        protected void announce(Object message) {
             messages.add(String.valueOf(message));
         }
 
-        protected List<String> getMessages() {
+        protected List<String> announce() {
             return messages;
         }
     }

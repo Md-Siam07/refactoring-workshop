@@ -15,23 +15,23 @@ public class TriviaGame {
     public void add(String playerName) {
         playerList.add(new Player(playerName));
 
-        printMessage(playerName + " was added");
-        printMessage("They are player number " + playerList.size());
+        announce(playerName + " was added");
+        announce("They are player number " + playerList.size());
     }
 
     public void roll(int roll) {
-        printMessage(getPlayer().getName() + " is the current player");
-        printMessage("They have rolled a " + roll);
+        announce(getPlayer().getName() + " is the current player");
+        announce("They have rolled a " + roll);
 
         if (getPlayer().isInPenaltyBox) {
             if (roll % 2 != 0) {
                 isGettingOutOfPenaltyBox = true;
 
-                printMessage(getPlayer().getName() + " is getting out of the penalty box");
+                announce(getPlayer().getName() + " is getting out of the penalty box");
                 movePlayerAndCheck(roll);
                 tellThePositionAndAskQuestion();
             } else {
-                printMessage(getPlayer().getName() + " is not getting out of the penalty box");
+                announce(getPlayer().getName() + " is not getting out of the penalty box");
                 isGettingOutOfPenaltyBox = false;
             }
 
@@ -46,10 +46,10 @@ public class TriviaGame {
     }
 
     private void tellThePositionAndAskQuestion() {
-        printMessage(getPlayer().getName()
+        announce(getPlayer().getName()
                 + "'s new location is "
                 + getPlayer().getPlace());
-        printMessage("The category is " + questions.currentCategory(getPlayer().getPlace()).getLabel());
+        announce("The category is " + questions.currentCategory(getPlayer().getPlace()).getLabel());
         askQuestion();
     }
 
@@ -58,7 +58,7 @@ public class TriviaGame {
     }
 
     private void askQuestion() {
-        printMessage(questions.getNextQuestion(getPlayer().getPlace()));
+        announce(questions.getNextQuestion(getPlayer().getPlace()));
     }
 
     private Player getPlayer() {
@@ -79,9 +79,9 @@ public class TriviaGame {
     }
 
     private boolean correctlyAnswered() {
-        printMessage("Answer was correct!!!!");
+        announce("Answer was correct!!!!");
         getPlayer().increaseCoin();
-        printMessage(playerList.get(currentPlayer).getName()
+        announce(playerList.get(currentPlayer).getName()
                 + " now has "
                 + getPlayer().getCoinInPurse()
                 + " Gold Coins.");
@@ -93,8 +93,8 @@ public class TriviaGame {
     }
 
     public void wrongAnswer() {
-        printMessage("Question was incorrectly answered");
-        printMessage(playerList.get(currentPlayer).getName() + " was sent to the penalty box");
+        announce("Question was incorrectly answered");
+        announce(playerList.get(currentPlayer).getName() + " was sent to the penalty box");
         getPlayer().setInPenaltyBox(true);
 
         currentPlayer++;
@@ -105,7 +105,7 @@ public class TriviaGame {
         return !(getPlayer().getCoinInPurse() == 6);
     }
 
-    protected void printMessage(Object message) {
+    protected void announce(Object message) {
         System.out.println(message);
     }
 }
