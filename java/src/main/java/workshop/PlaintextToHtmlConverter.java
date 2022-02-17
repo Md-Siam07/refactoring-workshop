@@ -14,18 +14,15 @@ public class PlaintextToHtmlConverter {
         return htmlLines;
     }
 
-    private String read() throws IOException {
+    protected String read() throws IOException {
         Path filePath = Paths.get("sample.txt");
         byte[] fileByteArray = Files.readAllBytes(filePath);
         return new String(fileByteArray);
     }
 
     private String basicHtmlEncode(String source) {
-
-        int i = 0;
         List<String> result = new ArrayList<>();
         List<String> convertedLine = new ArrayList<>();
-        //   String characterToConvert = stashNextCharacterAndAdvanceThePointer(source);
         for (char characterToConvert : source.toCharArray()) {
             switch (characterToConvert) {
                 case '<':
@@ -39,16 +36,14 @@ public class PlaintextToHtmlConverter {
                     break;
                 case '\n':
                     addANewLine(result,convertedLine);
-                    convertedLine=new ArrayList<>();
+                    convertedLine = new ArrayList<>();
                     break;
                 default:
-                    pushACharacterToTheOutput(convertedLine, String.valueOf(characterToConvert));
-
+                    pushACharacterToTheOutput(convertedLine,String.valueOf(characterToConvert));
             }
         }
         addANewLine(result,convertedLine);
-        String finalResult = String.join("<br />", result);
-        return finalResult;
+        return String.join("<br />", result);
     }
 
 
